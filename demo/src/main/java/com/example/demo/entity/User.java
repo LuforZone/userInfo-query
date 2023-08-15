@@ -1,5 +1,8 @@
 package com.example.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -13,11 +16,25 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @Column(name = "user_name")
     private String userName;
     private String password;
     private String email;
     private String uuid;
 
+    @JsonCreator
+    public User(@JsonProperty("userName") String userName,
+            @JsonProperty("password") String password,
+            @JsonProperty("email") String email,
+            @JsonProperty("uuid") String uuid) {
+        this.userName = userName;
+        this.password = password;
+        this.email = email;
+        this.uuid = uuid;
+    }
+
+    public User() {
+    }
     public long getId() {
         return id;
     }
