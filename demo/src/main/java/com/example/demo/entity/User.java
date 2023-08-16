@@ -1,5 +1,7 @@
 package com.example.demo.entity;
 
+import java.util.Objects;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -19,8 +21,11 @@ public class User {
     @Column(name = "user_name")
     private String userName;
     private String password;
+    @Column(name = "email")
     private String email;
     private String uuid;
+
+
 
     @JsonCreator
     public User(@JsonProperty("userName") String userName,
@@ -73,5 +78,17 @@ public class User {
 
     public void setUuid(String uuid) {
         this.uuid = uuid;
+    }
+        @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(email, user.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(email);
     }
 }

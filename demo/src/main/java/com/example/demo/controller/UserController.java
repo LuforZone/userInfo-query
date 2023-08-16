@@ -9,7 +9,7 @@ import com.example.demo.entity.User;
 import com.example.demo.entity.Result;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping(value = "/api/users", produces = "application/json")
 public class UserController {
     private UserService userService;
 
@@ -21,6 +21,7 @@ public class UserController {
     @GetMapping("/{email}") // get user by email
     public ResponseEntity<Result<User>> getUser(@PathVariable String email) {
         User queryResult = userService.getUserByEmail(email);
+        System.out.println( "getMapping" + queryResult);
         if (queryResult != null) {
             Result<User> result = new Result<User>(200, "success", queryResult);
             return ResponseEntity.ok(result);
@@ -32,9 +33,9 @@ public class UserController {
 
     @PostMapping // add users
     public ResponseEntity<Result<User>> addUser(@RequestBody User user) {
-        System.out.println("have access");
+        System.out.println("have access postMapping");
         User queryResult = userService.getUserByEmail(user.getEmail());
-        System.out.println(queryResult);
+        System.out.println("is there has account " + queryResult);
         if (queryResult != null) {
             System.out.println("User already exists");
             Result<User> result = new Result<>(HttpStatus.CONFLICT.value(), "User already exists", null);
@@ -49,7 +50,9 @@ public class UserController {
 
     @PutMapping("/{email}") // update users
     ResponseEntity<Result<User>> updateUser(@PathVariable String email, @RequestBody User user) {
-        User queryResult = userService.getUserByEmail(user.getEmail());
+        User queryResult = userService.getUserByEmail(email);
+        System.out.println("have access putMapping");
+        System.out.println("is there has account " + queryResult);
         if (queryResult != null) {
             userService.updateUserByEmail(email, user);
             Result<User> result = new Result<>(200, "success", null);
@@ -63,6 +66,7 @@ public class UserController {
     @DeleteMapping("/{email}") // delete users
     public ResponseEntity<Result<User>> deleteUser(@PathVariable String email) {
         User queryResult = userService.getUserByEmail(email);
+        System.out.println("have access deleteMapping");
         if (queryResult != null) {
             userService.deleteUserByEmail(email);
             Result<User> result = new Result<>(200, "success", null);

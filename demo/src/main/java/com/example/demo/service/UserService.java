@@ -33,6 +33,10 @@ public class UserService {
     }
 
     public void updateUserByEmail(String email, User user) {
+        user.setEmail(email);
+        System.out.println(user.getPassword() + " " + user.getUserName() + " " + user.getPassword());
+        System.out.println(user.getEmail());
         userMapper.updateUser(user);
+
     }
 }
