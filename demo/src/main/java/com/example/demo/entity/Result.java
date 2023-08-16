@@ -16,4 +16,24 @@ public class Result<T> {
         this.message = message;
         this.data = data;
     }
+
+    public void setMessage(String string) {
+        this.message = string;
+    }
+    public String getMessage() {
+        return message;
+    }
+    public void setStatusCode(int statusCode) {
+        this.statusCode = statusCode;
+    }
+    public int getStatusCode() {
+        return statusCode;
+    }
+    public void setData(T data) {
+        this.data = data;
+    }
+    public T getData() {
+        return data;
+    }
+    
 }

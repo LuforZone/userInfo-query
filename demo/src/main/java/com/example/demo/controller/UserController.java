@@ -39,7 +39,10 @@ public class UserController {
         if (queryResult != null) {
             System.out.println("User already exists");
             Result<User> result = new Result<>(HttpStatus.CONFLICT.value(), "User already exists", null);
+            result.setMessage("User already exists");
+            System.out.println(result.getMessage());
             return ResponseEntity.status(HttpStatus.CONFLICT).body(result);
+            
         } else {
             userService.addUser(user);
             System.out.println("User added");
